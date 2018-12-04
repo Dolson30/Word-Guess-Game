@@ -1,11 +1,26 @@
-var array = ['Cardinals', 'Falcons', 'Ravens', 'Bills', 'Panthers', 'Bears', 'Bengals', 'Browns', 'Cowboys', 'Broncos', 'Lions', 'Packers', 'Texans', 'Colts', 'Jaguars', 'Chiefs', 'Dolphins', 'Vikings', 'Patriots', 'Saints', 'Giants', 'Jets', 'Raiders', 'Eagles', 'Steelers', 'Chargers', '49ers', 'Seahawks', 'Rams', 'Buccaneers', 'Titans', 'Redskins']
+var array = ['Cardinals', 'Falcons', 'Ravens', 'Bills', 'Panthers', 'Bears', 'Bengals', 'Browns', 'Cowboys', 'Broncos', 'Lions', 'Packers', 'Texans', 'Colts', 'Jaguars', 'Chiefs', 'Dolphins', 'Vikings', 'Patriots', 'Saints', 'Giants', 'Jets', 'Raiders', 'Eagles', 'Steelers', 'Chargers', 'Seahawks', 'Rams', 'Buccaneers', 'Titans', 'Redskins']
 var guessedLetters =[];
 var guessingWord = [];
 var wins = 0; 
 var guesses = 0; 
 var gameOver = true;
 var compChoice; 
+var winnerAudio = document.getElementById("winnerAudio");
+var loserAudio = document.getElementById('loserAudio');
 
+
+function winnerSound()
+{
+    winnerAudio.loop = false; 
+    winnerAudio.play();
+
+}
+function loserSound()
+{
+    loserAudio.loop = false; 
+    loserAudio.play();
+
+}
 function newGame() {
     guesses = 0;
     gameOver = false;
@@ -22,7 +37,8 @@ function newGame() {
 }
 
 function replaceHTML(){
-    currentString.textContent= "Updated String: "
+    userGuess.textContent="Enter a letter to guess!";
+    currentString.textContent= "Updated String: ";
     for(var i = 0; i < guessingWord.length; i++){
         currentString.textContent += guessingWord[i];
     } 
@@ -39,7 +55,9 @@ function replaceHTML(){
         userGuess.textContent="YOU LOSE!";
         userGuesses.textContent = "Enter a new letter to start a new game!";
         currentString.textContent = "The word was: " + compChoice;
+        loserSound();
         gameOver = true;
+
     }
 }
 
@@ -58,31 +76,32 @@ document.onkeyup = function(event) {
         if (gameOver === false)
         {
     
-            console.log(guessedLetters);
-            console.log(guessedLetters.indexOf(userChoice));
-            if (compChoice.indexOf(userChoice) === -1)
-                { 
+            if(guessedLetters.indexOf(userChoice) === -1)
+                {
+                    guessedLetters.push(userChoice); 
+                    if (compChoice.indexOf(userChoice) === -1)
+                {   
                             guesses = guesses + 1 ; 
                             replaceHTML();
                 }
-                if(guessedLetters.indexOf(userChoice) === -1)
-                {
-                    guessedLetters.push(userChoice); 
-                    for (var i = 0; i < compChoice.length; i++) 
-                     {
-                          if(compChoice[i] === userChoice) 
-                         {
-                                 guessingWord[i] = userChoice;
-                                 replaceHTML();
-                          }
+                else{
+                        for (var i = 0; i < compChoice.length; i++) 
+                        {
+                             if(compChoice[i] === userChoice) 
+                                {
+                                     guessingWord[i] = userChoice;
+                                     replaceHTML();
+                                }
                         
-                     }
-
+                        }
+                    }
                 }
-                else
+            else if(guessedLetters.indexOf(userChoice) >-1)
                 {
                     alert("Select a letter you havent chosen before!");
-                }
+                }    
+    
+
 
 
         
@@ -94,9 +113,12 @@ document.onkeyup = function(event) {
 
     if(guessingWord.indexOf("_") === -1)
         {
-            document.getElementById("userGuess").textContent="YOU WIN!";
-            newGame();
+            
+            userGuess.textContent="YOU WIN!";
             userGuesses.textContent = "Enter a new letter to start a new game!";
+            winnerAudio.play();
+            gameOver = true;
+            
         }
     }
     else{
