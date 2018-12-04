@@ -57,14 +57,15 @@ document.onkeyup = function(event) {
 
         if (gameOver === false)
         {
-                if (compChoice.indexOf(userChoice) === -1)
-                {
-                            guessedLetters.push(userChoice); 
+    
+            console.log(guessedLetters);
+            console.log(guessedLetters.indexOf(userChoice));
+            if (compChoice.indexOf(userChoice) === -1)
+                { 
                             guesses = guesses + 1 ; 
                             replaceHTML();
                 }
-
-                else if(guessedLetters.indexOf(userChoice) === -1)
+                if(guessedLetters.indexOf(userChoice) === -1)
                 {
                     guessedLetters.push(userChoice); 
                     for (var i = 0; i < compChoice.length; i++) 
@@ -82,6 +83,7 @@ document.onkeyup = function(event) {
                 {
                     alert("Select a letter you havent chosen before!");
                 }
+
 
         
         }
