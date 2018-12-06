@@ -55,6 +55,7 @@ function replaceHTML(){
         userGuess.textContent="YOU LOSE!";
         userGuesses.textContent = "Enter a new letter to start a new game!";
         currentString.textContent = "The word was: " + compChoice;
+        guessesRemaining.textContent = "You have 0 incorrect guesses remaining." 
         loserSound();
         gameOver = true;
 
@@ -98,7 +99,7 @@ document.onkeyup = function(event) {
                 }
             else if(guessedLetters.indexOf(userChoice) >-1)
                 {
-                    alert("Select a letter you havent chosen before!");
+                    alert("Select a letter you haven't chosen before!");
                 }    
     
 
